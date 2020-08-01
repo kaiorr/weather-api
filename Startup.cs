@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using weather_api.Application;
 
 namespace weather_api
 {
@@ -26,6 +27,16 @@ namespace weather_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            // Níveis de injeção de dependências Transient adiciona uma nova instância para a classe WeatherSummary não compartilha estado.
+            services.AddTransient<IWeatherSummary, WeatherSumary>();
+            
+            //services.AddScoped<IWeatherSummary, WeatherSumary>();
+            //Scoped = compartilha estado dentro da mesma requisição
+
+
+            //services.AddSingleton<IWeatherSummary, WeatherSumary>();
+            //Singleton = compartilha estado entre todas as requisições
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

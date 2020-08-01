@@ -1,7 +1,7 @@
 namespace weather_api.Application
 {
-    public class IWeatherSummary
+    public interface IWeatherSummary
     {
-        
+         string[] getSummaries();
     }
 }
