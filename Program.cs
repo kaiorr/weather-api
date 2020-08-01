@@ -20,7 +20,9 @@ namespace weather_api
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>()
+                    //alterando porta padrão 5000 pra 8085
+                    .UseUrls("http://*:8085");
                 });
     }
 }
