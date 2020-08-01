@@ -61,7 +61,10 @@ namespace weather_api
             //Aqui o cors precisa ficar antes do Redirection e após o Routing
             app.UseRouting();
 
-            app.UseCors(corsPolicy);
+            app.UseCors();
+
+            //CORS global
+            //app.UseCors(corsPolicy);
 
             app.UseHttpsRedirection();
 

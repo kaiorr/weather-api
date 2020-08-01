@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using weather_api.Application;
@@ -10,6 +11,9 @@ namespace weather_api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    //CORS -> adicionando política do cors direto na controller
+    [EnableCors("development-allowAll")]
+
     public class WeatherForecastController : ControllerBase
     {
 
