@@ -16,6 +16,7 @@ namespace weather_api
 {
     public class Startup
     {
+        private readonly string corsPolicy = "development-allowAll";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,7 +26,18 @@ namespace weather_api
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {   
+            //CORS
+            //Aqui a ordem dos tratores alteram o viaduto, então atenção para ordem ao informar a política de cors, pois não pode ser adicionada abaixo dos controllers.
+            services.AddCors(options => {
+                options.AddPolicy(corsPolicy, 
+                policy=> policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+                //Se produção
+                options.AddPolicy("production-allowFew",
+                policy => policy.WithOrigins("www.myserver.com.br"));
+            });
+
             services.AddControllers();
             // Níveis de injeção de dependências Transient adiciona uma nova instância para a classe WeatherSummary não compartilha estado.
             services.AddTransient<IWeatherSummary, WeatherSumary>();
@@ -46,10 +58,12 @@ namespace weather_api
             {
                 app.UseDeveloperExceptionPage();
             }
+            //Aqui o cors precisa ficar antes do Redirection e após o Routing
+            app.UseRouting();
+
+            app.UseCors(corsPolicy);
 
             app.UseHttpsRedirection();
-
-            app.UseRouting();
 
             app.UseAuthorization();
 
